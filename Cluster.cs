@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KMeans
 {
@@ -27,9 +23,9 @@ namespace KMeans
             VectorPoints = new List<Point>();
         }
 
-        public bool isCentering()
+        public bool IsCentering()
         {
-            return (PrevX == X) && (PrevY == Y);
+            return (Math.Abs(PrevX - X) < double.Epsilon) && (Math.Abs(PrevY - Y) < double.Epsilon);
         }
     }
 }

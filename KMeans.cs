@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KMeans
 {
@@ -22,20 +19,18 @@ namespace KMeans
             }
             return points;
         }
-
-        private static Color GetClusterColor(List<Cluster> clusters, Point point)
+        public static List<Cluster> InitializeClusters(int countClusters, int maxCoordinate)
         {
-            double minDistance = double.PositiveInfinity;
-            int resultNumber = 0, currentCluster = 0;
-            foreach (var cluster in clusters) {
-                double tempDistance;
-                if ((tempDistance = GetDistanceToClusterCenter(cluster, point)) < minDistance) {
-                    minDistance = tempDistance;
-                    resultNumber = currentCluster;
-                }
-                currentCluster++;
+            Random random = new Random((int)DateTime.Now.Ticks);
+            List<Cluster> clusters = new List<Cluster>();
+            for (int i = 0; i < countClusters; i++)
+            {
+                clusters.Add(new Cluster(random.Next(maxCoordinate), random.Next(maxCoordinate),
+                    Color.FromArgb(255,
+                        (random.Next(255) * (i + 1) + 1) % 255, (random.Next(255) * (i + 1) + 1) % 255,
+                        (random.Next(255) * (i + 1) + 1) % 255)));
             }
-            return clusters[resultNumber].Color;
+            return clusters;
         }
 
         private static int GetClusterNumber(List<Cluster> clusters, Point point)
@@ -62,13 +57,12 @@ namespace KMeans
 
         public static List<Cluster> GetCentringClusters(List<Cluster> clusters, List<Point> points)
         {
-            double sumX, sumY;
             while (!CheckCenteringClusters(clusters))
             {
                 foreach (var cluster in clusters)
                 {
-                    sumX = 0;
-                    sumY = 0;
+                    double sumX = 0;
+                    double sumY = 0;
                     foreach (Point point in cluster.VectorPoints)
                     {
                         sumX += point.X;
@@ -97,7 +91,7 @@ namespace KMeans
         private static bool CheckCenteringClusters(List<Cluster> clusters)
         {
             foreach (var cluster in clusters) {
-                if (!cluster.isCentering()) {
+                if (!cluster.IsCentering()) {
                     return false;
                 }
             }
