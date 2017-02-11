@@ -23,19 +23,6 @@ namespace KMeans
             return points;
         }
 
-        public static List<Cluster> InitializeClusters(int countClusters, int maxCoordinate)
-        {
-            Random random = new Random((int) DateTime.Now.Ticks);
-            List<Cluster> clusters = new List<Cluster>();
-            for (int i = 0; i < countClusters; i++) {
-                clusters.Add(new Cluster(random.Next(maxCoordinate), random.Next(maxCoordinate),
-                    Color.FromArgb(255,
-                        (random.Next(255)*(i + 1) + 1)%255, (random.Next(255)*(i + 1) + 1)%255,
-                        (random.Next(255)*(i + 1) + 1)%255)));
-            }
-            return clusters;
-        }
-
         private static Color GetClusterColor(List<Cluster> clusters, Point point)
         {
             double minDistance = double.PositiveInfinity;
