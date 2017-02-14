@@ -88,7 +88,37 @@ namespace KMeans
             return clusters;
         }
 
-        private static bool CheckCenteringClusters(List<Cluster> clusters)
+        public static List<Cluster> GetNextStepForCentringClusters(List<Cluster> clusters, List<Point> points)
+        {
+            foreach (var cluster in clusters)
+            {
+                double sumX = 0;
+                double sumY = 0;
+                foreach (Point point in cluster.VectorPoints)
+                {
+                    sumX += point.X;
+                    sumY += point.Y;
+                }
+
+                cluster.PrevX = cluster.X;
+                cluster.PrevY = cluster.Y;
+
+                cluster.X = sumX / cluster.VectorPoints.Count;
+                cluster.Y = sumY / cluster.VectorPoints.Count;
+
+                cluster.VectorPoints.Clear();
+            }
+
+            foreach (var point in points)
+            {
+                int clusterNumber = GetClusterNumber(clusters, point);
+                point.Color = clusters[clusterNumber].Color;
+                clusters[clusterNumber].VectorPoints.Add(point);
+            }
+            return clusters;
+        }
+
+        public static bool CheckCenteringClusters(List<Cluster> clusters)
         {
             foreach (var cluster in clusters) {
                 if (!cluster.IsCentering()) {
