@@ -22,6 +22,15 @@ namespace KMeans
             Color = color;
             VectorPoints = new List<Point>();
         }
+        public Cluster(double x, double y, Color color, List<Point> vectorPoints)
+        {
+            X = x;
+            Y = y;
+            PrevX = double.PositiveInfinity;
+            PrevY = double.PositiveInfinity;
+            Color = color;
+            VectorPoints = vectorPoints;
+        }
 
         public bool IsCentering()
         {

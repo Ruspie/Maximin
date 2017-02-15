@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading.Tasks;
 
 namespace KMeans
 {
     public static class KMeans
     {
-        public static List<Point> InitializePoints(int countPoints, List<Cluster> clusters,  int maxCordinate)
+        public static async Task<List<Point>> InitializePoints(int countPoints, List<Cluster> clusters,  int maxCordinate)
         {
             Random random = new Random((int) DateTime.Now.Ticks);
             List<Point> points = new List<Point>();
@@ -19,7 +20,7 @@ namespace KMeans
             }
             return points;
         }
-        public static List<Cluster> InitializeClusters(int countClusters, int maxCoordinate)
+        public static async Task<List<Cluster>> InitializeClusters(int countClusters, int maxCoordinate)
         {
             Random random = new Random((int)DateTime.Now.Ticks);
             List<Cluster> clusters = new List<Cluster>();
@@ -55,7 +56,7 @@ namespace KMeans
             return Math.Sqrt(Math.Pow(cluster.X - point.X, 2) + Math.Pow(cluster.Y - point.Y, 2));
         }
 
-        public static List<Cluster> GetCentringClusters(List<Cluster> clusters, List<Point> points)
+        public static async Task<List<Cluster>> GetCentringClusters(List<Cluster> clusters, List<Point> points)
         {
             while (!CheckCenteringClusters(clusters))
             {
@@ -88,7 +89,7 @@ namespace KMeans
             return clusters;
         }
 
-        public static List<Cluster> GetNextStepForCentringClusters(List<Cluster> clusters, List<Point> points)
+        public static async Task<List<Cluster>> GetNextStepForCentringClusters(List<Cluster> clusters, List<Point> points)
         {
             foreach (var cluster in clusters)
             {
